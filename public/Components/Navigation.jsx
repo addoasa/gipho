@@ -6,7 +6,7 @@ class Navigation extends React.Component{
   }
   render(){
     return(
-      <h1>Hi world</h1>
+      <h1>Navigation</h1>
     );
   }
 }
