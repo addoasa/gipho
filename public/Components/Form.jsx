@@ -4,8 +4,13 @@ import SearchHistory from './SearchHistory';
 class Form extends React.Component{
   constructor(){
     super();
+    this.state ={
+      isUserSearching:false
+    };
     this.submitHandler = this.submitHandler.bind(this);
     this.changeHandler = this.changeHandler.bind(this);
+    this.focusHandler = this.focusHandler.bind(this);
+    this.blurHandler = this.blurHandler.bind(this);
   }
   componentDidMount(){
     //handle localstorage stuff
@@ -44,12 +49,32 @@ class Form extends React.Component{
       });
   }
   
+  focusHandler(){
+    this.setState({
+      isUserSearching:true
+    });
+
+  }
+  blurHandler(){
+    this.setState({
+      isUserSearching:false
+    });
+  }
   render(){
+    console.log(this.state.isUserSearching)
+
     return(
       <>
         <form onSubmit={this.submitHandler}>
-          <input type="input" placeholder="Search Gif..." onChange = {this.changeHandler}></input>
-          <SearchHistory searchHistory={this.props.searchHistory}/>
+          <input type="input" placeholder="Search Gif..."  onChange = {this.changeHandler} onFocus={this.focusHandler} value={this.props.savedInput} ></input>
+          {this.state.isUserSearching 
+            ? 
+            <SearchHistory 
+              searchHistory={this.props.searchHistory} 
+              updateInputWithHistory={this.props.updateInputWithHistory}
+            /> 
+            : 
+            <></>}
           <button type="submit">Search</button>
         </form>
       </>

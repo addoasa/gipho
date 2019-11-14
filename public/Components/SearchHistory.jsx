@@ -3,8 +3,12 @@ import React from 'react';
 class SearchHistory extends React.Component{
   constructor(){
     super();
+    this.addInputWithClick = this.addInputWithClick.bind(this);
   }
-
+  addInputWithClick(event){
+    console.log(event.target.innerText)
+    this.props.updateInputWithHistory(event.target.innerText);
+  }
   render(){
     const historyArr = this.props.searchHistory;
     let setOfhistorySearchesToRender = [];
@@ -22,7 +26,13 @@ class SearchHistory extends React.Component{
     }
     console.log(findDuplicates);
     for(let key in findDuplicates){
-        setOfhistorySearchesToRender.push(<h4>{key}</h4>);
+      // This will limit the history to showing only the last 10 most recent searches
+      if(setOfhistorySearchesToRender.length !== 10 ){
+        setOfhistorySearchesToRender.unshift(<h4 onClick={this.addInputWithClick}>{key}</h4>);
+      }else{
+        // once we hit 10 items break the for in loop
+        break;
+      }
     }
   
     // }else{

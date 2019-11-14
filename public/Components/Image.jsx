@@ -6,6 +6,7 @@ class Image extends React.Component{
     this.state={
       isLoaded: false
     };
+    this.doubleClickHandler = this.doubleClickHandler.bind(this);
   }
   componentDidMount(){
     this.setState = ({
@@ -13,13 +14,18 @@ class Image extends React.Component{
     });
     console.log("loaded");
   }
+  doubleClickHandler(){
+    this.props.addToFavorites(this.props.url);
+  }
   render(){
     const styles ={
       'backgroundColor': 'red',
       'backgroundRepeat': 'no-repeat'
     };
     return(
-      <img className="image" alt="gify gif" src={this.props.url} />
+      <div>
+        <img className="image" alt="gify gif" src={this.props.url} onDoubleClick={this.doubleClickHandler}/>
+      </div>
     );
   }
 }

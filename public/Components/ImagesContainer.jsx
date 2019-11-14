@@ -7,7 +7,7 @@ class ImagesContainer extends React.Component{
   }
   render(){
     const displayImages = this.props.savedImages.map((url,index)=>{
-      return <Image url={url}/>;
+      return <Image  url={url} addToFavorites={this.props.addToFavorites}/>;
     });
     return(
       <section className ="images-container" >{displayImages}</section>

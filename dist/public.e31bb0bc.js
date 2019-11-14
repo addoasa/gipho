@@ -31851,9 +31851,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -31865,12 +31865,22 @@ function (_React$Component) {
   _inherits(SearchHistory, _React$Component);
 
   function SearchHistory() {
+    var _this;
+
     _classCallCheck(this, SearchHistory);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(SearchHistory).call(this));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(SearchHistory).call(this));
+    _this.addInputWithClick = _this.addInputWithClick.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(SearchHistory, [{
+    key: "addInputWithClick",
+    value: function addInputWithClick(event) {
+      console.log(event.target.innerText);
+      this.props.updateInputWithHistory(event.target.innerText);
+    }
+  }, {
     key: "render",
     value: function render() {
       var historyArr = this.props.searchHistory;
@@ -31894,7 +31904,15 @@ function (_React$Component) {
       console.log(findDuplicates);
 
       for (var key in findDuplicates) {
-        setOfhistorySearchesToRender.push(_react.default.createElement("h4", null, key));
+        // This will limit the history to showing only the last 10 most recent searches
+        if (setOfhistorySearchesToRender.length !== 10) {
+          setOfhistorySearchesToRender.unshift(_react.default.createElement("h4", {
+            onClick: this.addInputWithClick
+          }, key));
+        } else {
+          // once we hit 10 items break the for in loop
+          break;
+        }
       } // }else{
       //   setOfHistorySearches = '';
       // }
@@ -31954,8 +31972,13 @@ function (_React$Component) {
     _classCallCheck(this, Form);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Form).call(this));
+    _this.state = {
+      isUserSearching: false
+    };
     _this.submitHandler = _this.submitHandler.bind(_assertThisInitialized(_this));
     _this.changeHandler = _this.changeHandler.bind(_assertThisInitialized(_this));
+    _this.focusHandler = _this.focusHandler.bind(_assertThisInitialized(_this));
+    _this.blurHandler = _this.blurHandler.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -32003,17 +32026,35 @@ function (_React$Component) {
       });
     }
   }, {
+    key: "focusHandler",
+    value: function focusHandler() {
+      this.setState({
+        isUserSearching: true
+      });
+    }
+  }, {
+    key: "blurHandler",
+    value: function blurHandler() {
+      this.setState({
+        isUserSearching: false
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
+      console.log(this.state.isUserSearching);
       return _react.default.createElement(_react.default.Fragment, null, _react.default.createElement("form", {
         onSubmit: this.submitHandler
       }, _react.default.createElement("input", {
         type: "input",
         placeholder: "Search Gif...",
-        onChange: this.changeHandler
-      }), _react.default.createElement(_SearchHistory.default, {
-        searchHistory: this.props.searchHistory
-      }), _react.default.createElement("button", {
+        onChange: this.changeHandler,
+        onFocus: this.focusHandler,
+        value: this.props.savedInput
+      }), this.state.isUserSearching ? _react.default.createElement(_SearchHistory.default, {
+        searchHistory: this.props.searchHistory,
+        updateInputWithHistory: this.props.updateInputWithHistory
+      }) : _react.default.createElement(_react.default.Fragment, null), _react.default.createElement("button", {
         type: "submit"
       }, "Search")));
     }
@@ -32173,9 +32214,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -32195,6 +32236,7 @@ function (_React$Component) {
     _this.state = {
       isLoaded: false
     };
+    _this.doubleClickHandler = _this.doubleClickHandler.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -32207,17 +32249,23 @@ function (_React$Component) {
       console.log("loaded");
     }
   }, {
+    key: "doubleClickHandler",
+    value: function doubleClickHandler() {
+      this.props.addToFavorites(this.props.url);
+    }
+  }, {
     key: "render",
     value: function render() {
       var styles = {
         'backgroundColor': 'red',
         'backgroundRepeat': 'no-repeat'
       };
-      return _react.default.createElement("img", {
+      return _react.default.createElement("div", null, _react.default.createElement("img", {
         className: "image",
         alt: "gify gif",
-        src: this.props.url
-      });
+        src: this.props.url,
+        onDoubleClick: this.doubleClickHandler
+      }));
     }
   }]);
 
@@ -32279,9 +32327,12 @@ function (_React$Component) {
   _createClass(ImagesContainer, [{
     key: "render",
     value: function render() {
+      var _this = this;
+
       var displayImages = this.props.savedImages.map(function (url, index) {
         return _react.default.createElement(_Image.default, {
-          url: url
+          url: url,
+          addToFavorites: _this.props.addToFavorites
         });
       });
       return _react.default.createElement("section", {
@@ -32357,18 +32408,22 @@ function (_React$Component) {
       pageOffset: 0,
       hitCount: 0,
       imgsAreLoading: false,
-      searchHistory: []
+      searchHistory: [],
+      favorites: []
     };
     _this.storeInput = _this.storeInput.bind(_assertThisInitialized(_this));
     _this.storeImages = _this.storeImages.bind(_assertThisInitialized(_this));
     _this.storeTotalHits = _this.storeTotalHits.bind(_assertThisInitialized(_this));
     _this.saveSearchHistory = _this.saveSearchHistory.bind(_assertThisInitialized(_this));
+    _this.addToFavorites = _this.addToFavorites.bind(_assertThisInitialized(_this));
+    _this.updateInputWithHistory = _this.updateInputWithHistory.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(App, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      //handle localstorage stuff
       console.log(localStorage); // if there are search history items in local storage save them in state for our application
 
       if (localStorage.getItem('giphoSearchHistory')) {
@@ -32376,8 +32431,15 @@ function (_React$Component) {
         this.setState({
           searchHistory: foundSeachHistory
         });
-      } //handle localstorage stuff
+      } // if the user has favorites stored in their browser already, retrieve them and store them in state
 
+
+      if (localStorage.getItem('giphoFavorites')) {
+        var foundFavorites = JSON.parse(localStorage.getItem('giphoFavorites'));
+        this.setState({
+          favorites: foundFavorites
+        });
+      }
     }
   }, {
     key: "storeInput",
@@ -32419,6 +32481,29 @@ function (_React$Component) {
       localStorage.setItem('giphoSearchHistory', JSON.stringify(newArr));
     }
   }, {
+    key: "addToFavorites",
+    value: function addToFavorites(uniqueImageSrc) {
+      // create a copy of old search history in state...
+      var newFavArr = this.state.favorites.slice(); // add the newly favorited img src url to this new array
+
+      newFavArr.push(uniqueImageSrc);
+      console.log('newFavArr', newFavArr); // //asynchronously update state with new array
+
+      this.setState({
+        favorites: newFavArr
+      }); // // directly update localstorage with new array
+
+      localStorage.setItem('giphoFavorites', JSON.stringify(newFavArr));
+      console.log("item faved", localStorage);
+    }
+  }, {
+    key: "updateInputWithHistory",
+    value: function updateInputWithHistory(historyItem) {
+      this.setState({
+        savedInput: historyItem
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       return _react.default.createElement(_react.default.Fragment, null, _react.default.createElement(_Header.default, null), _react.default.createElement(_Form.default, {
@@ -32428,13 +32513,15 @@ function (_React$Component) {
         storeTotalHits: this.storeTotalHits,
         pageOffset: this.state.pageOffset,
         searchHistory: this.state.searchHistory,
-        saveSearchHistory: this.saveSearchHistory
-      }), this.state.savedImages.length > 0 ? _react.default.createElement("main", null, " ", _react.default.createElement(_Navigation.default, {
+        saveSearchHistory: this.saveSearchHistory,
+        updateInputWithHistory: this.updateInputWithHistory
+      }), this.state.savedImages.length > 0 ? _react.default.createElement("main", null, _react.default.createElement(_Navigation.default, {
         savedInput: this.state.savedInput,
         hitCount: this.state.hitCount
-      }), " ", _react.default.createElement(_ImagesContainer.default, {
-        savedImages: this.state.savedImages
-      }), " ") : _react.default.createElement(_react.default.Fragment, null));
+      }), _react.default.createElement(_ImagesContainer.default, {
+        savedImages: this.state.savedImages,
+        addToFavorites: this.addToFavorites
+      })) : _react.default.createElement(_react.default.Fragment, null));
     }
   }]);
 
@@ -32483,7 +32570,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63944" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50857" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
