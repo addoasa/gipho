@@ -14,6 +14,7 @@ class ImagesContainer extends React.Component{
           favorites={this.props.favorites} 
           removeFromFavorites={this.props.removeFromFavorites}
           savedIds={this.props.savedIds[index]}
+          getModalData={this.props.getModalData}
         />
       );
     });

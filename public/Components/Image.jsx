@@ -37,18 +37,20 @@ class Image extends React.Component{
       });
     }
   }
-  modalClickHandler(id){
-    this.props.getModalData(id)
+  modalClickHandler(event){
+    this.props.getModalData(event.target.id);
   }
   render(){
     const styles ={
       'backgroundColor': 'red',
-      'backgroundRepeat': 'no-repeat'
+      'backgroundRepeat': 'no-repeat',
+      'height': '50px',
+      'width': '50px'
     };
     return(
       <div>
         <img className="image" alt="gify gif" src={this.props.url} onDoubleClick={this.doubleClickHandler}/>
-        <div id = {this.props.savedIds} className ="menu-icon" onClick={modalClickHandler}></div>
+        <div id = {this.props.savedIds} className ="menu-icon" style= {styles} onClick={this.modalClickHandler}></div>
       </div>
     );
   }

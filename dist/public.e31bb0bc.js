@@ -32276,6 +32276,7 @@ function (_React$Component) {
       isFavorited: false
     };
     _this.doubleClickHandler = _this.doubleClickHandler.bind(_assertThisInitialized(_this));
+    _this.modalClickHandler = _this.modalClickHandler.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -32317,21 +32318,29 @@ function (_React$Component) {
       }
     }
   }, {
+    key: "modalClickHandler",
+    value: function modalClickHandler(event) {
+      this.props.getModalData(event.target.id);
+    }
+  }, {
     key: "render",
     value: function render() {
       var styles = {
         'backgroundColor': 'red',
-        'backgroundRepeat': 'no-repeat'
+        'backgroundRepeat': 'no-repeat',
+        'height': '50px',
+        'width': '50px'
       };
       return _react.default.createElement("div", null, _react.default.createElement("img", {
-        id: this.props.savedIds,
         className: "image",
         alt: "gify gif",
         src: this.props.url,
         onDoubleClick: this.doubleClickHandler
       }), _react.default.createElement("div", {
-        id: "".concat(this.props.savedIds, "-menu"),
-        className: "menu-icon"
+        id: this.props.savedIds,
+        className: "menu-icon",
+        style: styles,
+        onClick: this.modalClickHandler
       }));
     }
   }]);
@@ -32402,7 +32411,8 @@ function (_React$Component) {
           addToFavorites: _this.props.addToFavorites,
           favorites: _this.props.favorites,
           removeFromFavorites: _this.props.removeFromFavorites,
-          savedIds: _this.props.savedIds[index]
+          savedIds: _this.props.savedIds[index],
+          getModalData: _this.props.getModalData
         });
       });
       return _react.default.createElement("section", {
@@ -32416,7 +32426,109 @@ function (_React$Component) {
 
 var _default = ImagesContainer;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","./Image":"Components/Image.jsx","../styles/ImagesContainer":"styles/ImagesContainer.css"}],"styles/App.css":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./Image":"Components/Image.jsx","../styles/ImagesContainer":"styles/ImagesContainer.css"}],"Components/ImageModal.jsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var ImageModal =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(ImageModal, _React$Component);
+
+  function ImageModal() {
+    var _this;
+
+    _classCallCheck(this, ImageModal);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ImageModal).call(this));
+    _this.state = {
+      imageUrl: '',
+      imageName: ''
+    };
+    _this.closeModal = _this.closeModal.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(ImageModal, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      fetch("https://api.giphy.com/v1/gifs/".concat(this.props.currentModalId, "?api_key=GZKGwdu6xlIM0iV58yFKJOFLqj0NLXFw&ids=1poVpywqWXhUNhVIqq"), {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          'Accept': 'application/json'
+        }
+      }).then(function (response) {
+        // translate response into readable json
+        console.log(response);
+        return response.json();
+      }).then(function (readableResponse) {
+        console.log('modal', readableResponse);
+        var foundGif = readableResponse.data.images.original_mp4.mp4;
+        var foundGifTitle = readableResponse.data.title;
+
+        _this2.setState({
+          imageUrl: foundGif,
+          imageName: foundGifTitle
+        });
+      });
+    }
+  }, {
+    key: "closeModal",
+    value: function closeModal() {
+      this.props.invalidateModal();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      console.log('BOOOOOOOOOOOOOOOOOM', this.props.currentModalId);
+      return _react.default.createElement("div", {
+        className: "modal-container"
+      }, _react.default.createElement("h2", {
+        onClick: this.closeModal
+      }, "x"), _react.default.createElement("video", {
+        width: "320",
+        height: "240",
+        controls: true,
+        src: this.state.imageUrl
+      }), _react.default.createElement("h1", null, this.state.imageName));
+    }
+  }]);
+
+  return ImageModal;
+}(_react.default.Component);
+
+var _default = ImageModal;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js"}],"styles/App.css":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -32438,6 +32550,8 @@ var _Form = _interopRequireDefault(require("./Components/Form"));
 var _Navigation = _interopRequireDefault(require("./Components/Navigation"));
 
 var _ImagesContainer = _interopRequireDefault(require("./Components/ImagesContainer"));
+
+var _ImageModal = _interopRequireDefault(require("./Components/ImageModal"));
 
 require("./styles/App");
 
@@ -32481,7 +32595,9 @@ function (_React$Component) {
       imgsAreLoading: false,
       searchHistory: [],
       favorites: [],
-      userAskedForFavs: false
+      userAskedForFavs: false,
+      showModal: false,
+      currentModalId: ''
     };
     _this.storeInput = _this.storeInput.bind(_assertThisInitialized(_this));
     _this.storeImages = _this.storeImages.bind(_assertThisInitialized(_this));
@@ -32493,6 +32609,8 @@ function (_React$Component) {
     _this.userSearchedAndDoesNotWantFavs = _this.userSearchedAndDoesNotWantFavs.bind(_assertThisInitialized(_this));
     _this.removeFromFavorites = _this.removeFromFavorites.bind(_assertThisInitialized(_this));
     _this.updateInputWithHistory = _this.updateInputWithHistory.bind(_assertThisInitialized(_this));
+    _this.getModalData = _this.getModalData.bind(_assertThisInitialized(_this));
+    _this.invalidateModal = _this.invalidateModal.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -32618,6 +32736,21 @@ function (_React$Component) {
       });
     }
   }, {
+    key: "getModalData",
+    value: function getModalData(gotId) {
+      this.setState({
+        currentModalId: gotId,
+        showModal: true
+      });
+    }
+  }, {
+    key: "invalidateModal",
+    value: function invalidateModal() {
+      this.setState({
+        showModal: false
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       return _react.default.createElement(_react.default.Fragment, null, _react.default.createElement(_Header.default, null), _react.default.createElement("button", {
@@ -32643,8 +32776,12 @@ function (_React$Component) {
         savedIds: this.state.savedIds,
         addToFavorites: this.addToFavorites,
         favorites: this.state.favorites,
-        removeFromFavorites: this.removeFromFavorites
-      })) : _react.default.createElement(_react.default.Fragment, null));
+        removeFromFavorites: this.removeFromFavorites,
+        getModalData: this.getModalData
+      })) : _react.default.createElement(_react.default.Fragment, null), this.state.showModal ? _react.default.createElement(_ImageModal.default, {
+        currentModalId: this.state.currentModalId,
+        invalidateModal: this.invalidateModal
+      }) : _react.default.createElement(_react.default.Fragment, null));
     }
   }]);
 
@@ -32653,7 +32790,7 @@ function (_React$Component) {
 
 var _default = App;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","./Components/Header":"Components/Header.jsx","./Components/Form":"Components/Form.jsx","./Components/Navigation":"Components/Navigation.jsx","./Components/ImagesContainer":"Components/ImagesContainer.jsx","./styles/App":"styles/App.css"}],"index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./Components/Header":"Components/Header.jsx","./Components/Form":"Components/Form.jsx","./Components/Navigation":"Components/Navigation.jsx","./Components/ImagesContainer":"Components/ImagesContainer.jsx","./Components/ImageModal":"Components/ImageModal.jsx","./styles/App":"styles/App.css"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));

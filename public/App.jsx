@@ -3,6 +3,7 @@ import Header from './Components/Header';
 import Form from './Components/Form';
 import Navigation from './Components/Navigation';
 import ImagesContainer from './Components/ImagesContainer';
+import ImageModal from './Components/ImageModal';
 import './styles/App';
 class App extends React.Component{
   constructor(){
@@ -16,8 +17,9 @@ class App extends React.Component{
       imgsAreLoading:false,
       searchHistory:[],
       favorites: [],
-      userAskedForFavs:false
-      showModal: false
+      userAskedForFavs:false,
+      showModal: false,
+      currentModalId:''
     };
     this.storeInput = this.storeInput.bind(this);
     this.storeImages = this.storeImages.bind(this);
@@ -29,6 +31,8 @@ class App extends React.Component{
     this.userSearchedAndDoesNotWantFavs = this.userSearchedAndDoesNotWantFavs.bind(this);
     this.removeFromFavorites = this.removeFromFavorites.bind(this);
     this.updateInputWithHistory = this.updateInputWithHistory.bind(this);
+    this.getModalData = this.getModalData.bind(this);
+    this.invalidateModal = this.invalidateModal.bind(this);
   }
   componentDidMount(){
     //handle localstorage stuff
@@ -136,6 +140,19 @@ class App extends React.Component{
       savedInput:historyItem
     });
   }
+
+  getModalData(gotId){
+    this.setState({
+      currentModalId: gotId,
+      showModal: true
+    });
+  }
+
+  invalidateModal(){
+    this.setState({
+      showModal:false
+    })
+  }
   render(){
     return(
       <>
@@ -169,14 +186,15 @@ class App extends React.Component{
               addToFavorites={this.addToFavorites}
               favorites = {this.state.favorites}
               removeFromFavorites = {this.removeFromFavorites}
+              getModalData= {this.getModalData}
             /> 
           </main> 
           : 
           <></>}
-          {this.state.showModal ?
-            <ImageModal />
-            :
-            <></>}
+        {this.state.showModal ?
+          <ImageModal currentModalId= {this.state.currentModalId} invalidateModal= {this.invalidateModal}/>
+          : 
+          <></>} 
       </>
     );
   }
