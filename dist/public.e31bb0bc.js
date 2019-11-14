@@ -31829,6 +31829,88 @@ function (_React$Component) {
 
 var _default = Header;
 exports.default = _default;
+},{"react":"../node_modules/react/index.js"}],"Components/SearchHistory.jsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var SearchHistory =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(SearchHistory, _React$Component);
+
+  function SearchHistory() {
+    _classCallCheck(this, SearchHistory);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(SearchHistory).call(this));
+  }
+
+  _createClass(SearchHistory, [{
+    key: "render",
+    value: function render() {
+      var historyArr = this.props.searchHistory;
+      var setOfhistorySearchesToRender = [];
+      console.log({
+        historyArr: historyArr
+      }); // check if the user may have searched the same item multiple times to avoid printing the history item multiple times
+
+      var findDuplicates = {};
+
+      if (historyArr.length > 0) {
+        for (var i = 0; i < historyArr.length; i++) {
+          if (findDuplicates[historyArr[i]]) {
+            findDuplicates[historyArr[i]]++;
+          } else {
+            findDuplicates[historyArr[i]] = 1;
+          }
+        }
+      }
+
+      console.log(findDuplicates);
+
+      for (var key in findDuplicates) {
+        setOfhistorySearchesToRender.push(_react.default.createElement("h4", null, key));
+      } // }else{
+      //   setOfHistorySearches = '';
+      // }
+      // setOfHistorySearches = this.props.searchHistory.map((historyItem,index)=>{
+      //     return <h3 className ="history-item">{historyItem}</h3>;})
+
+
+      return _react.default.createElement(_react.default.Fragment, null, setOfhistorySearchesToRender);
+    }
+  }]);
+
+  return SearchHistory;
+}(_react.default.Component);
+
+var _default = SearchHistory;
+exports.default = _default;
 },{"react":"../node_modules/react/index.js"}],"Components/Form.jsx":[function(require,module,exports) {
 "use strict";
 
@@ -31838,6 +31920,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
+
+var _SearchHistory = _interopRequireDefault(require("./SearchHistory"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -31890,7 +31974,7 @@ function (_React$Component) {
       var _this2 = this;
 
       event.preventDefault();
-      fetch("https://api.giphy.com/v1/gifs/search?api_key=GZKGwdu6xlIM0iV58yFKJOFLqj0NLXFw&q=".concat(this.props.storedInput, "?limit=25"), {
+      fetch("https://api.giphy.com/v1/gifs/search?api_key=GZKGwdu6xlIM0iV58yFKJOFLqj0NLXFw&q=".concat(this.props.savedInput, "&limit=25&offset=").concat(this.props.pageOffset), {
         method: 'GET',
         headers: {
           'content-type': 'application/json',
@@ -31898,18 +31982,24 @@ function (_React$Component) {
         }
       }).then(function (response) {
         // translate response into readable json
+        console.log(response);
         return response.json();
       }).then(function (readableResponse) {
         console.log(readableResponse);
-        var gotImages = readableResponse.data; // iterate through JSON data and store the image urls recieved in state
+        var gotImages = readableResponse.data;
+        var totalHits = readableResponse.pagination.total_count; // iterate through JSON data and store the image urls recieved in state
 
         var newSetOfUrls = [];
 
         for (var i = 0; i < gotImages.length; i++) {
-          newSetOfUrls.push(gotImages[i].url);
+          newSetOfUrls.push(gotImages[i].images.fixed_height_downsampled.url);
         }
 
         _this2.props.storeImages(newSetOfUrls);
+
+        _this2.props.storeTotalHits(totalHits);
+
+        _this2.props.saveSearchHistory(_this2.props.savedInput);
       });
     }
   }, {
@@ -31921,6 +32011,8 @@ function (_React$Component) {
         type: "input",
         placeholder: "Search Gif...",
         onChange: this.changeHandler
+      }), _react.default.createElement(_SearchHistory.default, {
+        searchHistory: this.props.searchHistory
       }), _react.default.createElement("button", {
         type: "submit"
       }, "Search")));
@@ -31932,7 +32024,7 @@ function (_React$Component) {
 
 var _default = Form;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js"}],"Components/Navigation.jsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./SearchHistory":"Components/SearchHistory.jsx"}],"Components/Navigation.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -31976,7 +32068,7 @@ function (_React$Component) {
   _createClass(Navigation, [{
     key: "render",
     value: function render() {
-      return _react.default.createElement("h1", null, "Navigation");
+      return _react.default.createElement("h3", null, "Found ", this.props.hitCount, " results for: ", this.props.savedInput);
     }
   }]);
 
@@ -32052,7 +32144,158 @@ function reloadCSS() {
 }
 
 module.exports = reloadCSS;
-},{"./bundle-url":"../node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"styles/App.css":[function(require,module,exports) {
+},{"./bundle-url":"../node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"styles/Image.css":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"Components/Image.jsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+require("../styles/Image.css");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Image =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Image, _React$Component);
+
+  function Image() {
+    var _this;
+
+    _classCallCheck(this, Image);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Image).call(this));
+    _this.state = {
+      isLoaded: false
+    };
+    return _this;
+  }
+
+  _createClass(Image, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.setState = {
+        isLoaded: true
+      };
+      console.log("loaded");
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var styles = {
+        'backgroundColor': 'red',
+        'backgroundRepeat': 'no-repeat'
+      };
+      return _react.default.createElement("img", {
+        className: "image",
+        alt: "gify gif",
+        src: this.props.url
+      });
+    }
+  }]);
+
+  return Image;
+}(_react.default.Component);
+
+var _default = Image;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","../styles/Image.css":"styles/Image.css"}],"styles/ImagesContainer.css":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"Components/ImagesContainer.jsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _Image = _interopRequireDefault(require("./Image"));
+
+require("../styles/ImagesContainer");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var ImagesContainer =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(ImagesContainer, _React$Component);
+
+  function ImagesContainer() {
+    _classCallCheck(this, ImagesContainer);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(ImagesContainer).call(this));
+  }
+
+  _createClass(ImagesContainer, [{
+    key: "render",
+    value: function render() {
+      var displayImages = this.props.savedImages.map(function (url, index) {
+        return _react.default.createElement(_Image.default, {
+          url: url
+        });
+      });
+      return _react.default.createElement("section", {
+        className: "images-container"
+      }, displayImages);
+    }
+  }]);
+
+  return ImagesContainer;
+}(_react.default.Component);
+
+var _default = ImagesContainer;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","./Image":"Components/Image.jsx","../styles/ImagesContainer":"styles/ImagesContainer.css"}],"styles/App.css":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -32072,6 +32315,8 @@ var _Header = _interopRequireDefault(require("./Components/Header"));
 var _Form = _interopRequireDefault(require("./Components/Form"));
 
 var _Navigation = _interopRequireDefault(require("./Components/Navigation"));
+
+var _ImagesContainer = _interopRequireDefault(require("./Components/ImagesContainer"));
 
 require("./styles/App");
 
@@ -32109,16 +32354,30 @@ function (_React$Component) {
     _this.state = {
       savedInput: '',
       savedImages: [],
-      pageOffset: 0
+      pageOffset: 0,
+      hitCount: 0,
+      imgsAreLoading: false,
+      searchHistory: []
     };
     _this.storeInput = _this.storeInput.bind(_assertThisInitialized(_this));
     _this.storeImages = _this.storeImages.bind(_assertThisInitialized(_this));
+    _this.storeTotalHits = _this.storeTotalHits.bind(_assertThisInitialized(_this));
+    _this.saveSearchHistory = _this.saveSearchHistory.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(App, [{
     key: "componentDidMount",
-    value: function componentDidMount() {//handle localstorage stuff
+    value: function componentDidMount() {
+      console.log(localStorage); // if there are search history items in local storage save them in state for our application
+
+      if (localStorage.getItem('giphoSearchHistory')) {
+        var foundSeachHistory = JSON.parse(localStorage.getItem('giphoSearchHistory'));
+        this.setState({
+          searchHistory: foundSeachHistory
+        });
+      } //handle localstorage stuff
+
     }
   }, {
     key: "storeInput",
@@ -32137,13 +32396,45 @@ function (_React$Component) {
       console.log(this.state.savedImages);
     }
   }, {
+    key: "storeTotalHits",
+    value: function storeTotalHits(hitsRecieved) {
+      this.setState({
+        hitCount: hitsRecieved
+      });
+      console.log(this.state.hitCount);
+    }
+  }, {
+    key: "saveSearchHistory",
+    value: function saveSearchHistory(searchInput) {
+      // create a copy of old search history in state...
+      var newArr = this.state.searchHistory.slice(); // add the newly typed input to this new array
+
+      newArr.push(searchInput);
+      console.log('newArr', newArr); //asynchronously update state with new array
+
+      this.setState({
+        searchHistory: newArr
+      }); // directly update localstorage with new array
+
+      localStorage.setItem('giphoSearchHistory', JSON.stringify(newArr));
+    }
+  }, {
     key: "render",
     value: function render() {
       return _react.default.createElement(_react.default.Fragment, null, _react.default.createElement(_Header.default, null), _react.default.createElement(_Form.default, {
         storeImages: this.storeImages,
         storeInput: this.storeInput,
-        savedInput: this.state.savedInput
-      }), this.state.savedImages, " ? ", _react.default.createElement(_Navigation.default, null), " : ", _react.default.createElement(_react.default.Fragment, null), _react.default.createElement(ImagesContainer, null));
+        savedInput: this.state.savedInput,
+        storeTotalHits: this.storeTotalHits,
+        pageOffset: this.state.pageOffset,
+        searchHistory: this.state.searchHistory,
+        saveSearchHistory: this.saveSearchHistory
+      }), this.state.savedImages.length > 0 ? _react.default.createElement("main", null, " ", _react.default.createElement(_Navigation.default, {
+        savedInput: this.state.savedInput,
+        hitCount: this.state.hitCount
+      }), " ", _react.default.createElement(_ImagesContainer.default, {
+        savedImages: this.state.savedImages
+      }), " ") : _react.default.createElement(_react.default.Fragment, null));
     }
   }]);
 
@@ -32152,7 +32443,7 @@ function (_React$Component) {
 
 var _default = App;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","./Components/Header":"Components/Header.jsx","./Components/Form":"Components/Form.jsx","./Components/Navigation":"Components/Navigation.jsx","./styles/App":"styles/App.css"}],"index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./Components/Header":"Components/Header.jsx","./Components/Form":"Components/Form.jsx","./Components/Navigation":"Components/Navigation.jsx","./Components/ImagesContainer":"Components/ImagesContainer.jsx","./styles/App":"styles/App.css"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
@@ -32192,7 +32483,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54569" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63944" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

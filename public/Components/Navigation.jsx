@@ -6,7 +6,7 @@ class Navigation extends React.Component{
   }
   render(){
     return(
-      <h1>Navigation</h1>
+    <h3>Found {this.props.hitCount} results for: {this.props.savedInput}</h3>
     );
   }
 }
