@@ -1,5 +1,4 @@
 import React from 'react';
-import Header from './Components/Header';
 import Form from './Components/Form';
 import Navigation from './Components/Navigation';
 import ImagesContainer from './Components/ImagesContainer';
@@ -33,6 +32,7 @@ class App extends React.Component{
     this.updateInputWithHistory = this.updateInputWithHistory.bind(this);
     this.getModalData = this.getModalData.bind(this);
     this.invalidateModal = this.invalidateModal.bind(this);
+    this.deleteHistory = this.deleteHistory.bind(this);
   }
   componentDidMount(){
     //handle localstorage stuff
@@ -87,7 +87,7 @@ class App extends React.Component{
     
     // add the newly typed input to this new array
     newArr.push(searchInput);
-    console.log('newArr', newArr)
+    console.log('newArr', newArr);
     //asynchronously update state with new array
     this.setState({
       searchHistory: newArr
@@ -108,7 +108,7 @@ class App extends React.Component{
     });
     // // directly update localstorage with new array
     localStorage.setItem('giphoFavorites', JSON.stringify(newFavArr));
-    console.log("item faved", localStorage)
+    console.log('item faved', localStorage);
   }
 
   showFavoriteGifs(){
@@ -128,11 +128,11 @@ class App extends React.Component{
     this.setState({
       favorites: arrWithAFavRemoved
     });
-    console.log({ arrWithAFavRemoved })
+    console.log({ arrWithAFavRemoved });
     localStorage.setItem('giphoFavorites', JSON.stringify(arrWithAFavRemoved));
-    console.log("item unfaved", localStorage);
+    console.log('item unfaved', localStorage);
     // this.showFavoriteGifs();
-    this.storeImages(arrWithAFavRemoved)
+    this.storeImages(arrWithAFavRemoved);
   
   }
   updateInputWithHistory(historyItem){
@@ -151,13 +151,23 @@ class App extends React.Component{
   invalidateModal(){
     this.setState({
       showModal:false
-    })
+    });
+  }
+  deleteHistory(){
+    this.setState({
+      searchHistory:[]
+    });
+    localStorage.removeItem('giphoSearchHistory')
+
   }
   render(){
     return(
       <>
-        <Header />
-        <button onClick={this.showFavoriteGifs}>SHOW ME FAVORITES</button>
+        <div className = 'get-favorites-container'>
+          <button className = 'favorites-btn' onClick={this.showFavoriteGifs}>FAVORITES</button>
+          <div className = 'favorites-icon' onClick={this.showFavoriteGifs}></div>
+        </div>
+        <button className="clearBtn" onClick={this.deleteHistory}>Clear History </button>
         <Form 
           storeImages={this.storeImages} 
           storeGifIds={this.storeGifIds}

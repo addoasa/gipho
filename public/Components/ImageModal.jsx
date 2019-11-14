@@ -1,5 +1,5 @@
 import React from 'react';
-
+import '../styles/ImageModal';
 class ImageModal extends React.Component{
   constructor(){
     super();
@@ -9,6 +9,7 @@ class ImageModal extends React.Component{
     };
     this.closeModal = this.closeModal.bind(this);
   }
+
   componentDidMount(){
     fetch(`https://api.giphy.com/v1/gifs/${this.props.currentModalId}?api_key=GZKGwdu6xlIM0iV58yFKJOFLqj0NLXFw&ids=1poVpywqWXhUNhVIqq`,{
       method: 'GET',
@@ -19,7 +20,6 @@ class ImageModal extends React.Component{
     })
       .then((response)=>{
         // translate response into readable json
-        console.log(response);
         return response.json();
       })
       .then((readableResponse)=>{
@@ -32,15 +32,16 @@ class ImageModal extends React.Component{
         });
       });
   }
+
   closeModal(){
     this.props.invalidateModal();
   }
+
   render(){
-    console.log('BOOOOOOOOOOOOOOOOOM',this.props.currentModalId);
     return(
       <div className= 'modal-container'>
-        <h2 onClick={this.closeModal}>x</h2>
-        <video width="320" height="240" controls src={this.state.imageUrl}>
+        <h2 className='exit-modal' onClick={this.closeModal}>x</h2>
+        <video className="modal-video" width="320" height="240" loop autoplay controls src={this.state.imageUrl}>
         </video>
         <h1>{this.state.imageName}</h1>
       </div>

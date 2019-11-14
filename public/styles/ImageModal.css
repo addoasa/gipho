@@ -1,0 +1,23 @@
+.modal-container{
+  width:100vw;
+  height:100vh;
+  background-color: rgba(255,255,255,0.9);
+  transition:0.2s;
+  margin: 40px auto;
+  position: absolute;
+  text-align: center;
+  font-family: 'Raleway', sans-serif;  color:#474439;
+  z-index: 30;
+  top: 50%;
+}
+.modal-video{
+  height:75vh;
+  width:auto;
+}
+.exit-modal{
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 30pt;
+  text-align:right;
+  cursor: pointer;
+  padding-right: 4%;
+}

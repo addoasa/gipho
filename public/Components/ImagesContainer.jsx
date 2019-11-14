@@ -19,7 +19,10 @@ class ImagesContainer extends React.Component{
       );
     });
     return(
-      <section className ="images-container" >{displayImages}</section>
+      <>
+        <h5 className="scroll-left">( scroll left )</h5>
+        <section className ="images-container" >{displayImages}</section>
+      </>
     );
   }
 }

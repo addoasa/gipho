@@ -1,5 +1,94 @@
-
+.image-and-menu{
+  position: relative;
+  display:flex;
+  flex-direction: column;
+  border:double white 6pt;
+}
 .image{
+  cursor: pointer;
   width: 100%;
   height: auto;
+}
+
+.menu-icon{
+  position: absolute;;
+  background-color: rgba(255,255,255,0.6);
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  z-index: 20;
+  height: 50px;
+  width: 50px;
+  top:80%;
+  left:80%;
+  opacity:0.5;
+  background-size: contain;
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Maya_3.svg/768px-Maya_3.svg.png');
+}
+.menu-icon:hover{
+  cursor: pointer;
+  opacity: 1;
+}
+
+.like-layer{
+  position: absolute;;
+  background-repeat: no-repeat;
+  z-index: 20;
+  height: 40px;
+  width: 40px;
+  top:82%;
+  left:68%;
+  opacity:0.5;
+  background-size: contain;
+  background-image: url('../assets/small-unlike.png');
+  ;
+}
+.liked-img{
+  animation: like 1s ;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition:1s;
+}
+.unliked-img{
+  animation: unlike 1.7s ;
+}
+@keyframes unlike{
+  0%{
+      backgreound-image: url('../assets/small-unlike.png');
+      opactiy:0;
+  }
+  20%{
+      background-image: url('../assets/small-unlike.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity:1;
+  }
+  66%{
+      background-image: url('../assets/small-unlike.png');
+
+  }
+ 
+  100%{
+     opacity:0;
+
+  }
+}
+
+@keyframes like{
+  0%{
+      background-image: url('../assets/small-like.png');
+      background-repeat: no-repeat;
+      background-position: center;
+  }
+ 33%{
+      background-image: url('../assets/like.png');
+
+ }
+  80%{
+      background-image: url('../assets/small-like.png');
+
+  }
+  100%{
+      background-image: url('../assets/small-like.png');
+
+  }
 }

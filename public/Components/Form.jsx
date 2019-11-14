@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchHistory from './SearchHistory';
-
+import '../styles/Form';
 class Form extends React.Component{
   constructor(){
     super();
@@ -12,10 +12,7 @@ class Form extends React.Component{
     this.focusHandler = this.focusHandler.bind(this);
     this.blurHandler = this.blurHandler.bind(this);
   }
-  componentDidMount(){
-    //handle localstorage stuff
-  } 
-
+ 
   changeHandler(event){
     this.props.storeInput(event.target.value);
   }
@@ -32,7 +29,6 @@ class Form extends React.Component{
     })
       .then((response)=>{
         // translate response into readable json
-        console.log(response);
         return response.json();
       })
       .then((readableResponse)=>{
@@ -68,15 +64,19 @@ class Form extends React.Component{
       });
     },500);
   }
-
+ 
   
   render(){
-    console.log(this.state.isUserSearching)
 
     return(
       <>
-        <form onSubmit={this.submitHandler}>
-          <input type="input" placeholder="Search Gif..."  onChange = {this.changeHandler} onFocus={this.focusHandler} value={this.props.savedInput} onBlur={this.blurHandler} ></input>
+        <div className="logo">
+          <h1 className ="logo-title">GIPHO-</h1>
+          <div className ="logo-image"/>
+        </div>
+        <form className ="search-form" onSubmit={this.submitHandler}>
+          <input className="search-bar" type="input" placeholder="Search Gif..."  onChange = {this.changeHandler} onFocus={this.focusHandler} value={this.props.savedInput} onBlur={this.blurHandler} ></input>
+          <h4>(Double click to add a Gif to favorites.)</h4>
           {this.state.isUserSearching   
             ? 
             <SearchHistory 
@@ -85,7 +85,7 @@ class Form extends React.Component{
             /> 
             : 
             <></>}
-          <button type="submit">Search</button>
+          <button className="submit-button" type="submit">Search</button>
         </form>
       </>
     );

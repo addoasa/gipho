@@ -31776,387 +31776,7 @@ if ("development" === 'production') {
 } else {
   module.exports = require('./cjs/react-dom.development.js');
 }
-},{"./cjs/react-dom.development.js":"../node_modules/react-dom/cjs/react-dom.development.js"}],"Components/Header.jsx":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireDefault(require("react"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-var Header =
-/*#__PURE__*/
-function (_React$Component) {
-  _inherits(Header, _React$Component);
-
-  function Header() {
-    _classCallCheck(this, Header);
-
-    return _possibleConstructorReturn(this, _getPrototypeOf(Header).call(this));
-  }
-
-  _createClass(Header, [{
-    key: "render",
-    value: function render() {
-      return _react.default.createElement("h1", null, "Hi world");
-    }
-  }]);
-
-  return Header;
-}(_react.default.Component);
-
-var _default = Header;
-exports.default = _default;
-},{"react":"../node_modules/react/index.js"}],"Components/SearchHistory.jsx":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireDefault(require("react"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-var SearchHistory =
-/*#__PURE__*/
-function (_React$Component) {
-  _inherits(SearchHistory, _React$Component);
-
-  function SearchHistory() {
-    var _this;
-
-    _classCallCheck(this, SearchHistory);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(SearchHistory).call(this));
-    _this.addInputWithClick = _this.addInputWithClick.bind(_assertThisInitialized(_this));
-    return _this;
-  }
-
-  _createClass(SearchHistory, [{
-    key: "addInputWithClick",
-    value: function addInputWithClick(event) {
-      this.props.updateInputWithHistory(event.target.innerText);
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var historyArr = this.props.searchHistory;
-      var setOfhistorySearchesToRender = [];
-      console.log({
-        historyArr: historyArr
-      }); // check if the user may have searched the same item multiple times to avoid printing the history item multiple times
-
-      var findDuplicates = {};
-
-      if (historyArr.length > 0) {
-        for (var i = 0; i < historyArr.length; i++) {
-          if (findDuplicates[historyArr[i]]) {
-            findDuplicates[historyArr[i]]++;
-          } else {
-            findDuplicates[historyArr[i]] = 1;
-          }
-        }
-      }
-
-      console.log(findDuplicates);
-
-      for (var key in findDuplicates) {
-        // This will limit the history to showing only the last 10 most recent searches
-        if (setOfhistorySearchesToRender.length !== 10) {
-          // insert the searches in the order of most recently searched using unshift
-          setOfhistorySearchesToRender.unshift(_react.default.createElement("h4", {
-            className: 'history-item',
-            onClick: this.addInputWithClick
-          }, key));
-        } else {
-          // once we hit 10 items break the for in loop
-          break;
-        }
-      } // }else{
-      //   setOfHistorySearches = '';
-      // }
-      // setOfHistorySearches = this.props.searchHistory.map((historyItem,index)=>{
-      //     return <h3 className ="history-item">{historyItem}</h3>;})
-
-
-      return _react.default.createElement(_react.default.Fragment, null, setOfhistorySearchesToRender);
-    }
-  }]);
-
-  return SearchHistory;
-}(_react.default.Component);
-
-var _default = SearchHistory;
-exports.default = _default;
-},{"react":"../node_modules/react/index.js"}],"Components/Form.jsx":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireDefault(require("react"));
-
-var _SearchHistory = _interopRequireDefault(require("./SearchHistory"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-var Form =
-/*#__PURE__*/
-function (_React$Component) {
-  _inherits(Form, _React$Component);
-
-  function Form() {
-    var _this;
-
-    _classCallCheck(this, Form);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Form).call(this));
-    _this.state = {
-      isUserSearching: false
-    };
-    _this.submitHandler = _this.submitHandler.bind(_assertThisInitialized(_this));
-    _this.changeHandler = _this.changeHandler.bind(_assertThisInitialized(_this));
-    _this.focusHandler = _this.focusHandler.bind(_assertThisInitialized(_this));
-    _this.blurHandler = _this.blurHandler.bind(_assertThisInitialized(_this));
-    return _this;
-  }
-
-  _createClass(Form, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {//handle localstorage stuff
-    }
-  }, {
-    key: "changeHandler",
-    value: function changeHandler(event) {
-      this.props.storeInput(event.target.value);
-    }
-  }, {
-    key: "submitHandler",
-    value: function submitHandler(event) {
-      var _this2 = this;
-
-      event.preventDefault();
-      this.props.userSearchedAndDoesNotWantFavs();
-      fetch("https://api.giphy.com/v1/gifs/search?api_key=GZKGwdu6xlIM0iV58yFKJOFLqj0NLXFw&q=".concat(this.props.savedInput, "&limit=25&offset=").concat(this.props.pageOffset), {
-        method: 'GET',
-        headers: {
-          'content-type': 'application/json',
-          'Accept': 'application/json'
-        }
-      }).then(function (response) {
-        // translate response into readable json
-        console.log(response);
-        return response.json();
-      }).then(function (readableResponse) {
-        console.log(readableResponse);
-        var gotImages = readableResponse.data;
-        var totalHits = readableResponse.pagination.total_count; // iterate through JSON data and store the image urls recieved in state
-
-        var newSetOfUrls = [];
-        var newSetOfIds = [];
-
-        for (var i = 0; i < gotImages.length; i++) {
-          newSetOfUrls.push(gotImages[i].images.fixed_height_downsampled.url);
-          newSetOfIds.push(gotImages[i].id);
-        }
-
-        _this2.props.storeImages(newSetOfUrls);
-
-        _this2.props.storeGifIds(newSetOfIds);
-
-        _this2.props.storeTotalHits(totalHits);
-
-        _this2.props.saveSearchHistory(_this2.props.savedInput);
-      });
-    }
-  }, {
-    key: "focusHandler",
-    value: function focusHandler() {
-      this.setState({
-        isUserSearching: true
-      });
-    }
-  }, {
-    key: "blurHandler",
-    value: function blurHandler() {
-      var _this3 = this;
-
-      // When a user clicks way from the input text field the history box will disappear after 1 ms (leaving enough time for it to occupy the text field on click)
-      setTimeout(function () {
-        console.log('hit');
-
-        _this3.setState({
-          isUserSearching: false
-        });
-      }, 500);
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      console.log(this.state.isUserSearching);
-      return _react.default.createElement(_react.default.Fragment, null, _react.default.createElement("form", {
-        onSubmit: this.submitHandler
-      }, _react.default.createElement("input", {
-        type: "input",
-        placeholder: "Search Gif...",
-        onChange: this.changeHandler,
-        onFocus: this.focusHandler,
-        value: this.props.savedInput,
-        onBlur: this.blurHandler
-      }), this.state.isUserSearching ? _react.default.createElement(_SearchHistory.default, {
-        searchHistory: this.props.searchHistory,
-        updateInputWithHistory: this.props.updateInputWithHistory
-      }) : _react.default.createElement(_react.default.Fragment, null), _react.default.createElement("button", {
-        type: "submit"
-      }, "Search")));
-    }
-  }]);
-
-  return Form;
-}(_react.default.Component);
-
-var _default = Form;
-exports.default = _default;
-},{"react":"../node_modules/react/index.js","./SearchHistory":"Components/SearchHistory.jsx"}],"Components/Navigation.jsx":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireDefault(require("react"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-var Navigation =
-/*#__PURE__*/
-function (_React$Component) {
-  _inherits(Navigation, _React$Component);
-
-  function Navigation() {
-    var _this;
-
-    _classCallCheck(this, Navigation);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Navigation).call(this));
-    _this.state = {
-      searchTerm: ''
-    };
-    return _this;
-  }
-
-  _createClass(Navigation, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      // Saving the input here at the time of the fetch request is done to prevent the "results for" statement from dynamically changing whenever user types into the input field
-      this.setState({
-        searchTerm: this.props.savedInput
-      });
-    }
-  }, {
-    key: "componentDidUpdate",
-    value: function componentDidUpdate() {
-      // If the user switches from looking at favorites to searching for a term, this function will allow the serch term written to be freshly updated
-      if (this.props.savedInput !== this.state.searchTerm) {
-        this.setState({
-          searchTerm: this.props.savedInput
-        });
-      }
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      return _react.default.createElement(_react.default.Fragment, null, this.props.userAskedForFavs ? _react.default.createElement("div", null, _react.default.createElement("h2", null, "Your Favorites"), _react.default.createElement("h3", null, this.props.favorites.length, " gifs found")) : _react.default.createElement("h3", null, "Found ", this.props.hitCount, " results for: ", this.state.searchTerm));
-    }
-  }]);
-
-  return Navigation;
-}(_react.default.Component);
-
-var _default = Navigation;
-exports.default = _default;
-},{"react":"../node_modules/react/index.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+},{"./cjs/react-dom.development.js":"../node_modules/react-dom/cjs/react-dom.development.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -32223,12 +31843,359 @@ function reloadCSS() {
 }
 
 module.exports = reloadCSS;
-},{"./bundle-url":"../node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"styles/Image.css":[function(require,module,exports) {
+},{"./bundle-url":"../node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"styles/SearchHistory.css":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"Components/Image.jsx":[function(require,module,exports) {
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"Components/SearchHistory.jsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+require("../styles/SearchHistory");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var SearchHistory =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(SearchHistory, _React$Component);
+
+  function SearchHistory() {
+    var _this;
+
+    _classCallCheck(this, SearchHistory);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(SearchHistory).call(this));
+    _this.addInputWithClick = _this.addInputWithClick.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(SearchHistory, [{
+    key: "addInputWithClick",
+    value: function addInputWithClick(event) {
+      this.props.updateInputWithHistory(event.target.innerText);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var historyArr = this.props.searchHistory;
+      var setOfhistorySearchesToRender = []; // check if the user may have searched the same item multiple times to avoid printing the history item multiple times
+
+      var findDuplicates = {};
+
+      if (historyArr.length > 0) {
+        for (var i = 0; i < historyArr.length; i++) {
+          if (findDuplicates[historyArr[i]]) {
+            findDuplicates[historyArr[i]]++;
+          } else {
+            findDuplicates[historyArr[i]] = 1;
+          }
+        }
+      }
+
+      console.log(findDuplicates);
+
+      for (var key in findDuplicates) {
+        // This will limit the history to showing only the last 10 most recent searches
+        if (setOfhistorySearchesToRender.length !== 10) {
+          // insert the searches in the order of most recently searched using unshift
+          setOfhistorySearchesToRender.unshift(_react.default.createElement("h4", {
+            className: 'history-item',
+            onClick: this.addInputWithClick
+          }, key));
+        } else {
+          // once we hit 10 items break the for in loop
+          break;
+        }
+      }
+
+      return _react.default.createElement("div", {
+        className: "history-container"
+      }, setOfhistorySearchesToRender);
+    }
+  }]);
+
+  return SearchHistory;
+}(_react.default.Component);
+
+var _default = SearchHistory;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","../styles/SearchHistory":"styles/SearchHistory.css"}],"styles/Form.css":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"./..\\assets\\flippingbox.gif":[["flippingbox.5ac16ae6.gif","assets/flippingbox.gif"],"assets/flippingbox.gif"],"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"Components/Form.jsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _SearchHistory = _interopRequireDefault(require("./SearchHistory"));
+
+require("../styles/Form");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Form =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Form, _React$Component);
+
+  function Form() {
+    var _this;
+
+    _classCallCheck(this, Form);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Form).call(this));
+    _this.state = {
+      isUserSearching: false
+    };
+    _this.submitHandler = _this.submitHandler.bind(_assertThisInitialized(_this));
+    _this.changeHandler = _this.changeHandler.bind(_assertThisInitialized(_this));
+    _this.focusHandler = _this.focusHandler.bind(_assertThisInitialized(_this));
+    _this.blurHandler = _this.blurHandler.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(Form, [{
+    key: "changeHandler",
+    value: function changeHandler(event) {
+      this.props.storeInput(event.target.value);
+    }
+  }, {
+    key: "submitHandler",
+    value: function submitHandler(event) {
+      var _this2 = this;
+
+      event.preventDefault();
+      this.props.userSearchedAndDoesNotWantFavs();
+      fetch("https://api.giphy.com/v1/gifs/search?api_key=GZKGwdu6xlIM0iV58yFKJOFLqj0NLXFw&q=".concat(this.props.savedInput, "&limit=25&offset=").concat(this.props.pageOffset), {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          'Accept': 'application/json'
+        }
+      }).then(function (response) {
+        // translate response into readable json
+        return response.json();
+      }).then(function (readableResponse) {
+        console.log(readableResponse);
+        var gotImages = readableResponse.data;
+        var totalHits = readableResponse.pagination.total_count; // iterate through JSON data and store the image urls recieved in state
+
+        var newSetOfUrls = [];
+        var newSetOfIds = [];
+
+        for (var i = 0; i < gotImages.length; i++) {
+          newSetOfUrls.push(gotImages[i].images.fixed_height_downsampled.url);
+          newSetOfIds.push(gotImages[i].id);
+        }
+
+        _this2.props.storeImages(newSetOfUrls);
+
+        _this2.props.storeGifIds(newSetOfIds);
+
+        _this2.props.storeTotalHits(totalHits);
+
+        _this2.props.saveSearchHistory(_this2.props.savedInput);
+      });
+    }
+  }, {
+    key: "focusHandler",
+    value: function focusHandler() {
+      this.setState({
+        isUserSearching: true
+      });
+    }
+  }, {
+    key: "blurHandler",
+    value: function blurHandler() {
+      var _this3 = this;
+
+      // When a user clicks way from the input text field the history box will disappear after 1 ms (leaving enough time for it to occupy the text field on click)
+      setTimeout(function () {
+        console.log('hit');
+
+        _this3.setState({
+          isUserSearching: false
+        });
+      }, 500);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return _react.default.createElement(_react.default.Fragment, null, _react.default.createElement("div", {
+        className: "logo"
+      }, _react.default.createElement("h1", {
+        className: "logo-title"
+      }, "GIPHO-"), _react.default.createElement("div", {
+        className: "logo-image"
+      })), _react.default.createElement("form", {
+        className: "search-form",
+        onSubmit: this.submitHandler
+      }, _react.default.createElement("input", {
+        className: "search-bar",
+        type: "input",
+        placeholder: "Search Gif...",
+        onChange: this.changeHandler,
+        onFocus: this.focusHandler,
+        value: this.props.savedInput,
+        onBlur: this.blurHandler
+      }), _react.default.createElement("h4", null, "(Double click to add a Gif to favorites.)"), this.state.isUserSearching ? _react.default.createElement(_SearchHistory.default, {
+        searchHistory: this.props.searchHistory,
+        updateInputWithHistory: this.props.updateInputWithHistory
+      }) : _react.default.createElement(_react.default.Fragment, null), _react.default.createElement("button", {
+        className: "submit-button",
+        type: "submit"
+      }, "Search")));
+    }
+  }]);
+
+  return Form;
+}(_react.default.Component);
+
+var _default = Form;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","./SearchHistory":"Components/SearchHistory.jsx","../styles/Form":"styles/Form.css"}],"styles/Navigation.css":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"Components/Navigation.jsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+require("../styles/Navigation");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Navigation =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Navigation, _React$Component);
+
+  function Navigation() {
+    var _this;
+
+    _classCallCheck(this, Navigation);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Navigation).call(this));
+    _this.state = {
+      searchTerm: ''
+    };
+    return _this;
+  }
+
+  _createClass(Navigation, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      // Saving the input here at the time of the fetch request is done to prevent the "results for" statement from dynamically changing whenever user types into the input field
+      this.setState({
+        searchTerm: this.props.savedInput
+      });
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      // If the user switches from looking at favorites to searching for a term, this function will allow the serch term written to be freshly updated
+      if (this.props.savedInput !== this.state.searchTerm) {
+        this.setState({
+          searchTerm: this.props.savedInput
+        });
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return _react.default.createElement(_react.default.Fragment, null, this.props.userAskedForFavs ? _react.default.createElement("div", {
+        className: "navigation"
+      }, _react.default.createElement("h2", null, "Favorites"), _react.default.createElement("h3", null, this.props.favorites.length, " gifs found")) : _react.default.createElement("h3", null, "Found ", this.props.hitCount, " results for : ", this.state.searchTerm));
+    }
+  }]);
+
+  return Navigation;
+}(_react.default.Component);
+
+var _default = Navigation;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","../styles/Navigation":"styles/Navigation.css"}],"styles/Image.css":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"./..\\assets\\small-unlike.png":[["small-unlike.024f50ab.png","assets/small-unlike.png"],"assets/small-unlike.png"],"./..\\assets\\small-like.png":[["small-like.028b7e89.png","assets/small-like.png"],"assets/small-like.png"],"./..\\assets\\like.png":[["like.b0b5a917.png","assets/like.png"],"assets/like.png"],"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"Components/Image.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32286,7 +32253,7 @@ function (_React$Component) {
       this.setState({
         isLoaded: true
       });
-      console.log("loaded");
+      console.log('loaded');
     }
   }, {
     key: "doubleClickHandler",
@@ -32325,13 +32292,13 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var styles = {
-        'backgroundColor': 'red',
-        'backgroundRepeat': 'no-repeat',
-        'height': '50px',
-        'width': '50px'
-      };
-      return _react.default.createElement("div", null, _react.default.createElement("img", {
+      return _react.default.createElement("div", {
+        className: "image-and-menu"
+      }, _react.default.createElement("div", {
+        className: this.state.isFavorited ? 'like-layer liked-img' : 'like-layer unliked-img'
+      }), _react.default.createElement("div", {
+        className: 'like-layer'
+      }), _react.default.createElement("img", {
         className: "image",
         alt: "gify gif",
         src: this.props.url,
@@ -32339,7 +32306,6 @@ function (_React$Component) {
       }), _react.default.createElement("div", {
         id: this.props.savedIds,
         className: "menu-icon",
-        style: styles,
         onClick: this.modalClickHandler
       }));
     }
@@ -32415,9 +32381,11 @@ function (_React$Component) {
           getModalData: _this.props.getModalData
         });
       });
-      return _react.default.createElement("section", {
+      return _react.default.createElement(_react.default.Fragment, null, _react.default.createElement("h5", {
+        className: "scroll-left"
+      }, "( scroll left )"), _react.default.createElement("section", {
         className: "images-container"
-      }, displayImages);
+      }, displayImages));
     }
   }]);
 
@@ -32426,7 +32394,12 @@ function (_React$Component) {
 
 var _default = ImagesContainer;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","./Image":"Components/Image.jsx","../styles/ImagesContainer":"styles/ImagesContainer.css"}],"Components/ImageModal.jsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./Image":"Components/Image.jsx","../styles/ImagesContainer":"styles/ImagesContainer.css"}],"styles/ImageModal.css":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"Components/ImageModal.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32435,6 +32408,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
+
+require("../styles/ImageModal");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32488,7 +32463,6 @@ function (_React$Component) {
         }
       }).then(function (response) {
         // translate response into readable json
-        console.log(response);
         return response.json();
       }).then(function (readableResponse) {
         console.log('modal', readableResponse);
@@ -32509,14 +32483,17 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      console.log('BOOOOOOOOOOOOOOOOOM', this.props.currentModalId);
       return _react.default.createElement("div", {
         className: "modal-container"
       }, _react.default.createElement("h2", {
+        className: "exit-modal",
         onClick: this.closeModal
       }, "x"), _react.default.createElement("video", {
+        className: "modal-video",
         width: "320",
         height: "240",
+        loop: true,
+        autoplay: true,
         controls: true,
         src: this.state.imageUrl
       }), _react.default.createElement("h1", null, this.state.imageName));
@@ -32528,12 +32505,12 @@ function (_React$Component) {
 
 var _default = ImageModal;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js"}],"styles/App.css":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../styles/ImageModal":"styles/ImageModal.css"}],"styles/App.css":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"App.jsx":[function(require,module,exports) {
+},{"./..\\assets\\unlike.jpg":[["unlike.5a9a7c0d.jpg","assets/unlike.jpg"],"assets/unlike.jpg"],"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"App.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32542,8 +32519,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
-
-var _Header = _interopRequireDefault(require("./Components/Header"));
 
 var _Form = _interopRequireDefault(require("./Components/Form"));
 
@@ -32611,6 +32586,7 @@ function (_React$Component) {
     _this.updateInputWithHistory = _this.updateInputWithHistory.bind(_assertThisInitialized(_this));
     _this.getModalData = _this.getModalData.bind(_assertThisInitialized(_this));
     _this.invalidateModal = _this.invalidateModal.bind(_assertThisInitialized(_this));
+    _this.deleteHistory = _this.deleteHistory.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -32696,7 +32672,7 @@ function (_React$Component) {
       }); // // directly update localstorage with new array
 
       localStorage.setItem('giphoFavorites', JSON.stringify(newFavArr));
-      console.log("item faved", localStorage);
+      console.log('item faved', localStorage);
     }
   }, {
     key: "showFavoriteGifs",
@@ -32724,7 +32700,7 @@ function (_React$Component) {
         arrWithAFavRemoved: arrWithAFavRemoved
       });
       localStorage.setItem('giphoFavorites', JSON.stringify(arrWithAFavRemoved));
-      console.log("item unfaved", localStorage); // this.showFavoriteGifs();
+      console.log('item unfaved', localStorage); // this.showFavoriteGifs();
 
       this.storeImages(arrWithAFavRemoved);
     }
@@ -32751,11 +32727,28 @@ function (_React$Component) {
       });
     }
   }, {
+    key: "deleteHistory",
+    value: function deleteHistory() {
+      this.setState({
+        searchHistory: []
+      });
+      localStorage.removeItem('giphoSearchHistory');
+    }
+  }, {
     key: "render",
     value: function render() {
-      return _react.default.createElement(_react.default.Fragment, null, _react.default.createElement(_Header.default, null), _react.default.createElement("button", {
+      return _react.default.createElement(_react.default.Fragment, null, _react.default.createElement("div", {
+        className: "get-favorites-container"
+      }, _react.default.createElement("button", {
+        className: "favorites-btn",
         onClick: this.showFavoriteGifs
-      }, "SHOW ME FAVORITES"), _react.default.createElement(_Form.default, {
+      }, "FAVORITES"), _react.default.createElement("div", {
+        className: "favorites-icon",
+        onClick: this.showFavoriteGifs
+      })), _react.default.createElement("button", {
+        className: "clearBtn",
+        onClick: this.deleteHistory
+      }, "Clear History "), _react.default.createElement(_Form.default, {
         storeImages: this.storeImages,
         storeGifIds: this.storeGifIds,
         storeInput: this.storeInput,
@@ -32790,7 +32783,7 @@ function (_React$Component) {
 
 var _default = App;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","./Components/Header":"Components/Header.jsx","./Components/Form":"Components/Form.jsx","./Components/Navigation":"Components/Navigation.jsx","./Components/ImagesContainer":"Components/ImagesContainer.jsx","./Components/ImageModal":"Components/ImageModal.jsx","./styles/App":"styles/App.css"}],"index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./Components/Form":"Components/Form.jsx","./Components/Navigation":"Components/Navigation.jsx","./Components/ImagesContainer":"Components/ImagesContainer.jsx","./Components/ImageModal":"Components/ImageModal.jsx","./styles/App":"styles/App.css"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
@@ -32830,7 +32823,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50857" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63751" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -1,5 +1,5 @@
 import React from 'react';
-
+import '../styles/Navigation';
 class Navigation extends React.Component{
   constructor(){
     super();
@@ -26,12 +26,12 @@ class Navigation extends React.Component{
     return(
       <>
         {this.props.userAskedForFavs ? 
-          <div>
-            <h2>Your Favorites</h2>
+          <div className="navigation">
+            <h2>Favorites</h2>
             <h3>{this.props.favorites.length} gifs found</h3>
           </div> 
           : 
-          <h3>Found {this.props.hitCount} results for: {this.state.searchTerm}</h3>}
+          <h3>Found {this.props.hitCount} results for : {this.state.searchTerm}</h3>}
       </>  
     );
   }

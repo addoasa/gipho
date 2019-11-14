@@ -1,28 +1,322 @@
+.history-container{
+    border: solid 1px #E6E6E6;
+    top:40%;
+    margin:0 auto;
+    border-radius: 3px;
+    width:25rem;
+    height: auto;
+    padding-bottom: 0px;
+    z-index: 100;
+    background-color: #ffffff;
+    transition:0.3s;
+    position:absolute;
+    box-shadow: 0px 10px 10px rgba(0,0,0,0.5);
+    align-content: center;
+}
+.history-item{
+  border-top:solid 1px #E6E6E6;
+  padding-top: 4%;
+  padding-bottom: 4%;
+  height:1em;
+  width:25rem;
+  margin:0 auto;
+  cursor:pointer;
+}
+.history-item:hover{
+  border-top:solid 1px #E6E6E6;
+  padding-top: 4%;
+  height:1em;
+  background-color: rgba(157, 204, 204, 0.26);
+}
+.search-form{
+  margin: 0 auto;
+  width: 25em;
+  text-align: center;
+}
 
+.search-form h4{
+  text-align: center;
+  font-family: 'Raleway', sans-serif;
+  font-size: 12pt ;
+  color:rgba(0,0,0,0.7);
+  font-weight:300;
+}
+
+.search-bar{
+  width:200px;
+  height:40px;
+  border-radius: 50px;
+  font-size: 12pt;
+  color:#272727;
+  background-color: #FAFAFA;
+  border: solid 1px #E6E6E6;
+  padding-left: 30%;
+  transition:0.3s;
+}
+
+.search-bar:hover{
+  border: none;
+  box-shadow:0px 1px 5px rgba(0,0,0,0.3);
+}
+
+.search-bar:focus{
+  width: 300px;
+  border: none;
+  outline: none;
+  box-shadow:0px 1px 5px rgba(0,0,0,0.3);
+  padding-left: 20px;    
+  transition:0.1;
+  outline:none;
+}
+
+.submit-button{
+  width:250px;
+  height: 50px;
+  margin-top: 20px;
+  background-color:rgba(22, 151, 43, 0.979);
+  border: none;
+  color:white;
+  font-family:helvetica;
+  font-weight:600;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.submit-button:hover{
+  background-color: rgba(28, 182, 54, 0.979);
+}
+
+.logo{
+  display:flex;
+  margin:0 auto;
+  width:16em;
+  height:auto;
+}
+
+.logo-title{
+  font-size: 40pt;
+  font-family: 'Roboto', sans-serif;
+}
+
+.logo-image{
+  background-image: url("/flippingbox.5ac16ae6.gif");
+  height:auto;
+  width:100px;
+  margin-top: 16%;
+  background-repeat: no-repeat;
+  background-origin: contain;
+}
+
+.searchbar-and-clearbtn{
+  display:flex;
+}
+.navigation{
+  margin:0 auto;
+}
+.navigation h2{
+  text-align: center;
+  font-family: 'Raleway', sans-serif;
+}
+.navigation h3{
+  text-align: center;
+  font-family: 'Raleway', sans-serif;
+  font-size: 20pt ;
+  color:rgba(0,0,0,0.7);
+  font-weight:300;
+}
+.image-and-menu{
+  position: relative;
+  display:flex;
+  flex-direction: column;
+  border:double white 6pt;
+}
 .image{
+  cursor: pointer;
   width: 100%;
   height: auto;
 }
+
+.menu-icon{
+  position: absolute;;
+  background-color: rgba(255,255,255,0.6);
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  z-index: 20;
+  height: 50px;
+  width: 50px;
+  top:80%;
+  left:80%;
+  opacity:0.5;
+  background-size: contain;
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Maya_3.svg/768px-Maya_3.svg.png');
+}
+.menu-icon:hover{
+  cursor: pointer;
+  opacity: 1;
+}
+
+.like-layer{
+  position: absolute;;
+  background-repeat: no-repeat;
+  z-index: 20;
+  height: 40px;
+  width: 40px;
+  top:82%;
+  left:68%;
+  opacity:0.5;
+  background-size: contain;
+  background-image: url('/small-unlike.024f50ab.png');
+  ;
+}
+.liked-img{
+  animation: like 1s ;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition:1s;
+}
+.unliked-img{
+  animation: unlike 1.7s ;
+}
+@keyframes unlike{
+  0%{
+      backgreound-image: url('/small-unlike.024f50ab.png');
+      opactiy:0;
+  }
+  20%{
+      background-image: url('/small-unlike.024f50ab.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity:1;
+  }
+  66%{
+      background-image: url('/small-unlike.024f50ab.png');
+
+  }
+ 
+  100%{
+     opacity:0;
+
+  }
+}
+
+@keyframes like{
+  0%{
+      background-image: url('/small-like.028b7e89.png');
+      background-repeat: no-repeat;
+      background-position: center;
+  }
+ 33%{
+      background-image: url('/like.b0b5a917.png');
+
+ }
+  80%{
+      background-image: url('/small-like.028b7e89.png');
+
+  }
+  100%{
+      background-image: url('/small-like.028b7e89.png');
+
+  }
+}
 .images-container{
-  /* display:grid; */
-  /* grid-template-columns: minmax(100px, max-content); */
+  scroll-behavior: smooth;
+  overflow-y: auto;
   line-height: 0;
   column-count: 3;
-  column-gap: 0.5px;  
+  column-gap: 2px; 
+  height:100vh;
 }
-/* @media(min-width:900px){
-  .images-container{
-    grid-template-columns: 1fr 2fr 1fr;
-  }
+.scroll-left{
+  font-family: 'Raleway', sans-serif;
+  color:rgba(0,0,0,0.7);
+  font-weight:300;
+  margin-left: 90%;
 }
-@media(min-width:400px){
-  .images-container{
-    grid-template-columns: 100vw;
-  }
-} */
+
+.modal-container{
+  width:100vw;
+  height:100vh;
+  background-color: rgba(255,255,255,0.9);
+  transition:0.2s;
+  margin: 40px auto;
+  position: absolute;
+  text-align: center;
+  font-family: 'Raleway', sans-serif;  color:#474439;
+  z-index: 30;
+  top: 50%;
+}
+.modal-video{
+  height:75vh;
+  width:auto;
+}
+.exit-modal{
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 30pt;
+  text-align:right;
+  cursor: pointer;
+  padding-right: 4%;
+}
 body{
   padding:0;
-  margin:0;
+  margin:0;  
+  min-height: 100%;
+}
+
+html {
+  height: 100%;
+}
+
+.get-favorites-container{
+  display: flex;
+  margin-top: 1.5%;
+  margin-left: 89%;
+}
+
+.clearBtn{
+  outline: none;
+  outline-style: none;
+  opacity:0.7;
+  border:none;
+  cursor: pointer;
+  background-color: transparent;
+  height:auto;
+  padding:0;
+  border-radius: 3px;
+  margin-left: 89.2%;
+}
+
+.clearBtn:hover{
+  opacity:1;
+}
+
+.favorites-btn{
+  outline: none;
+  outline-style: none;
+  opacity:0.7;
+  border:none;
+  cursor: pointer;
+  background-color: transparent;
+  height:50px;
+  border-radius: 3px;
+}
+.favorites-icon{
+  cursor:pointer;
+  margin-top: 9%;
+  margin-left: 2%;
+  background-image: url('/unlike.5a9a7c0d.jpg');
+  width:20px;
+  height:20px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity:0.7
+}
+
+.favorites-btn:hover{
+  opacity:1;
+}
+
+.favorites-icon:hover{
+  opacity:1;
 }
 
 /*# sourceMappingURL=/public.e31bb0bc.css.map */

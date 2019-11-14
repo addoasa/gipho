@@ -1,17 +1,14 @@
 .images-container{
-  /* display:grid; */
-  /* grid-template-columns: minmax(100px, max-content); */
+  scroll-behavior: smooth;
+  overflow-y: auto;
   line-height: 0;
   column-count: 3;
-  column-gap: 0.5px;  
+  column-gap: 2px; 
+  height:100vh;
 }
-/* @media(min-width:900px){
-  .images-container{
-    grid-template-columns: 1fr 2fr 1fr;
-  }
+.scroll-left{
+  font-family: 'Raleway', sans-serif;
+  color:rgba(0,0,0,0.7);
+  font-weight:300;
+  margin-left: 90%;
 }
-@media(min-width:400px){
-  .images-container{
-    grid-template-columns: 100vw;
-  }
-} */
