@@ -10,17 +10,24 @@ class App extends React.Component{
     this.state = {
       savedInput:'',
       savedImages: [],
+      savedIds:[],
       pageOffset:0,
       hitCount:0,
       imgsAreLoading:false,
       searchHistory:[],
-      favorites: []
+      favorites: [],
+      userAskedForFavs:false
+      showModal: false
     };
     this.storeInput = this.storeInput.bind(this);
     this.storeImages = this.storeImages.bind(this);
+    this.storeGifIds = this.storeGifIds.bind(this);
     this.storeTotalHits = this.storeTotalHits.bind(this);
     this.saveSearchHistory = this.saveSearchHistory.bind(this);
     this.addToFavorites = this.addToFavorites.bind(this);
+    this.showFavoriteGifs = this.showFavoriteGifs.bind(this);
+    this.userSearchedAndDoesNotWantFavs = this.userSearchedAndDoesNotWantFavs.bind(this);
+    this.removeFromFavorites = this.removeFromFavorites.bind(this);
     this.updateInputWithHistory = this.updateInputWithHistory.bind(this);
   }
   componentDidMount(){
@@ -52,6 +59,13 @@ class App extends React.Component{
   storeImages(imgsRecieved){
     this.setState({
       savedImages : imgsRecieved
+    });
+    console.log(this.state.savedImages);
+  }
+
+  storeGifIds(idsRecieved){
+    this.setState({
+      savedIds : idsRecieved
     });
     console.log(this.state.savedImages);
   }
@@ -92,6 +106,31 @@ class App extends React.Component{
     localStorage.setItem('giphoFavorites', JSON.stringify(newFavArr));
     console.log("item faved", localStorage)
   }
+
+  showFavoriteGifs(){
+    // if the favorite button is clicked use the earlier method for populating the dom with favorites array that had been synced with localstorage favorites on componentdidmount
+    this.storeImages(this.state.favorites);
+    this.setState({
+      userAskedForFavs:true
+    });
+  }
+
+  userSearchedAndDoesNotWantFavs(){
+    this.setState({
+      userAskedForFavs:false
+    });
+  }
+  removeFromFavorites(arrWithAFavRemoved){
+    this.setState({
+      favorites: arrWithAFavRemoved
+    });
+    console.log({ arrWithAFavRemoved })
+    localStorage.setItem('giphoFavorites', JSON.stringify(arrWithAFavRemoved));
+    console.log("item unfaved", localStorage);
+    // this.showFavoriteGifs();
+    this.storeImages(arrWithAFavRemoved)
+  
+  }
   updateInputWithHistory(historyItem){
     this.setState({
       savedInput:historyItem
@@ -101,8 +140,10 @@ class App extends React.Component{
     return(
       <>
         <Header />
+        <button onClick={this.showFavoriteGifs}>SHOW ME FAVORITES</button>
         <Form 
           storeImages={this.storeImages} 
+          storeGifIds={this.storeGifIds}
           storeInput={this.storeInput} 
           savedInput= {this.state.savedInput} 
           storeTotalHits = {this.storeTotalHits} 
@@ -110,20 +151,32 @@ class App extends React.Component{
           searchHistory={this.state.searchHistory} 
           saveSearchHistory= {this.saveSearchHistory} 
           updateInputWithHistory={this.updateInputWithHistory}
+          userSearchedAndDoesNotWantFavs={this.userSearchedAndDoesNotWantFavs}
         />
         {/* Use ternary to determine if we have images in our state from our fetch, render our set of images and tell us how many images we found */}
-        {this.state.savedImages.length > 0 
-          ? 
+        {this.state.savedImages.length > 0 ? 
           <main> 
             <Navigation 
               savedInput= {this.state.savedInput} 
-              hitCount={this.state.hitCount}/> 
+              hitCount={this.state.hitCount}
+              userAskedForFavs={this.state.userAskedForFavs}
+              favorites = {this.state.favorites}
+            />
+              
             <ImagesContainer 
               savedImages={this.state.savedImages} 
-              addToFavorites={this.addToFavorites}/> 
+              savedIds={this.state.savedIds}
+              addToFavorites={this.addToFavorites}
+              favorites = {this.state.favorites}
+              removeFromFavorites = {this.removeFromFavorites}
+            /> 
           </main> 
           : 
           <></>}
+          {this.state.showModal ?
+            <ImageModal />
+            :
+            <></>}
       </>
     );
   }

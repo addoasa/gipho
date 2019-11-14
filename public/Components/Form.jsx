@@ -5,7 +5,7 @@ class Form extends React.Component{
   constructor(){
     super();
     this.state ={
-      isUserSearching:false
+      isUserSearching:false,
     };
     this.submitHandler = this.submitHandler.bind(this);
     this.changeHandler = this.changeHandler.bind(this);
@@ -22,6 +22,7 @@ class Form extends React.Component{
 
   submitHandler(event){
     event.preventDefault();
+    this.props.userSearchedAndDoesNotWantFavs();
     fetch(`https://api.giphy.com/v1/gifs/search?api_key=GZKGwdu6xlIM0iV58yFKJOFLqj0NLXFw&q=${this.props.savedInput}&limit=25&offset=${this.props.pageOffset}`,{
       method: 'GET',
       headers:{
@@ -40,10 +41,13 @@ class Form extends React.Component{
         const totalHits = readableResponse.pagination.total_count;
         // iterate through JSON data and store the image urls recieved in state
         const newSetOfUrls = [];
+        const newSetOfIds = [];
         for(let i = 0; i < gotImages.length; i++){
           newSetOfUrls.push(gotImages[i].images.fixed_height_downsampled.url);
+          newSetOfIds.push(gotImages[i].id);
         } 
         this.props.storeImages(newSetOfUrls);
+        this.props.storeGifIds(newSetOfIds);
         this.props.storeTotalHits(totalHits);
         this.props.saveSearchHistory(this.props.savedInput);
       });
@@ -56,18 +60,24 @@ class Form extends React.Component{
 
   }
   blurHandler(){
-    this.setState({
-      isUserSearching:false
-    });
+    // When a user clicks way from the input text field the history box will disappear after 1 ms (leaving enough time for it to occupy the text field on click)
+    setTimeout(()=>{
+      console.log('hit');
+      this.setState({
+        isUserSearching:false,
+      });
+    },500);
   }
+
+  
   render(){
     console.log(this.state.isUserSearching)
 
     return(
       <>
         <form onSubmit={this.submitHandler}>
-          <input type="input" placeholder="Search Gif..."  onChange = {this.changeHandler} onFocus={this.focusHandler} value={this.props.savedInput} ></input>
-          {this.state.isUserSearching 
+          <input type="input" placeholder="Search Gif..."  onChange = {this.changeHandler} onFocus={this.focusHandler} value={this.props.savedInput} onBlur={this.blurHandler} ></input>
+          {this.state.isUserSearching   
             ? 
             <SearchHistory 
               searchHistory={this.props.searchHistory} 

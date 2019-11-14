@@ -31877,7 +31877,6 @@ function (_React$Component) {
   _createClass(SearchHistory, [{
     key: "addInputWithClick",
     value: function addInputWithClick(event) {
-      console.log(event.target.innerText);
       this.props.updateInputWithHistory(event.target.innerText);
     }
   }, {
@@ -31906,7 +31905,9 @@ function (_React$Component) {
       for (var key in findDuplicates) {
         // This will limit the history to showing only the last 10 most recent searches
         if (setOfhistorySearchesToRender.length !== 10) {
+          // insert the searches in the order of most recently searched using unshift
           setOfhistorySearchesToRender.unshift(_react.default.createElement("h4", {
+            className: 'history-item',
             onClick: this.addInputWithClick
           }, key));
         } else {
@@ -31997,6 +31998,7 @@ function (_React$Component) {
       var _this2 = this;
 
       event.preventDefault();
+      this.props.userSearchedAndDoesNotWantFavs();
       fetch("https://api.giphy.com/v1/gifs/search?api_key=GZKGwdu6xlIM0iV58yFKJOFLqj0NLXFw&q=".concat(this.props.savedInput, "&limit=25&offset=").concat(this.props.pageOffset), {
         method: 'GET',
         headers: {
@@ -32013,12 +32015,16 @@ function (_React$Component) {
         var totalHits = readableResponse.pagination.total_count; // iterate through JSON data and store the image urls recieved in state
 
         var newSetOfUrls = [];
+        var newSetOfIds = [];
 
         for (var i = 0; i < gotImages.length; i++) {
           newSetOfUrls.push(gotImages[i].images.fixed_height_downsampled.url);
+          newSetOfIds.push(gotImages[i].id);
         }
 
         _this2.props.storeImages(newSetOfUrls);
+
+        _this2.props.storeGifIds(newSetOfIds);
 
         _this2.props.storeTotalHits(totalHits);
 
@@ -32035,9 +32041,16 @@ function (_React$Component) {
   }, {
     key: "blurHandler",
     value: function blurHandler() {
-      this.setState({
-        isUserSearching: false
-      });
+      var _this3 = this;
+
+      // When a user clicks way from the input text field the history box will disappear after 1 ms (leaving enough time for it to occupy the text field on click)
+      setTimeout(function () {
+        console.log('hit');
+
+        _this3.setState({
+          isUserSearching: false
+        });
+      }, 500);
     }
   }, {
     key: "render",
@@ -32050,7 +32063,8 @@ function (_React$Component) {
         placeholder: "Search Gif...",
         onChange: this.changeHandler,
         onFocus: this.focusHandler,
-        value: this.props.savedInput
+        value: this.props.savedInput,
+        onBlur: this.blurHandler
       }), this.state.isUserSearching ? _react.default.createElement(_SearchHistory.default, {
         searchHistory: this.props.searchHistory,
         updateInputWithHistory: this.props.updateInputWithHistory
@@ -32101,15 +32115,39 @@ function (_React$Component) {
   _inherits(Navigation, _React$Component);
 
   function Navigation() {
+    var _this;
+
     _classCallCheck(this, Navigation);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Navigation).call(this));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Navigation).call(this));
+    _this.state = {
+      searchTerm: ''
+    };
+    return _this;
   }
 
   _createClass(Navigation, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      // Saving the input here at the time of the fetch request is done to prevent the "results for" statement from dynamically changing whenever user types into the input field
+      this.setState({
+        searchTerm: this.props.savedInput
+      });
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      // If the user switches from looking at favorites to searching for a term, this function will allow the serch term written to be freshly updated
+      if (this.props.savedInput !== this.state.searchTerm) {
+        this.setState({
+          searchTerm: this.props.savedInput
+        });
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
-      return _react.default.createElement("h3", null, "Found ", this.props.hitCount, " results for: ", this.props.savedInput);
+      return _react.default.createElement(_react.default.Fragment, null, this.props.userAskedForFavs ? _react.default.createElement("div", null, _react.default.createElement("h2", null, "Your Favorites"), _react.default.createElement("h3", null, this.props.favorites.length, " gifs found")) : _react.default.createElement("h3", null, "Found ", this.props.hitCount, " results for: ", this.state.searchTerm));
     }
   }]);
 
@@ -32234,7 +32272,8 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Image).call(this));
     _this.state = {
-      isLoaded: false
+      isLoaded: false,
+      isFavorited: false
     };
     _this.doubleClickHandler = _this.doubleClickHandler.bind(_assertThisInitialized(_this));
     return _this;
@@ -32243,15 +32282,39 @@ function (_React$Component) {
   _createClass(Image, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.setState = {
+      this.setState({
         isLoaded: true
-      };
+      });
       console.log("loaded");
     }
   }, {
     key: "doubleClickHandler",
     value: function doubleClickHandler() {
-      this.props.addToFavorites(this.props.url);
+      var copyOfFavs = this.props.favorites.slice();
+      console.log('before', {
+        copyOfFavs: copyOfFavs
+      });
+
+      if (!copyOfFavs.includes(event.target.src)) {
+        this.props.addToFavorites(this.props.url);
+        this.setState({
+          isFavorited: true
+        });
+      } else {
+        for (var i = 0; i < copyOfFavs.length; i++) {
+          if (copyOfFavs[i] === event.target.src) {
+            copyOfFavs.splice(i, 1);
+          }
+        }
+
+        console.log('after', {
+          copyOfFavs: copyOfFavs
+        });
+        this.props.removeFromFavorites(copyOfFavs);
+        this.setState({
+          isFavorited: false
+        });
+      }
     }
   }, {
     key: "render",
@@ -32261,10 +32324,14 @@ function (_React$Component) {
         'backgroundRepeat': 'no-repeat'
       };
       return _react.default.createElement("div", null, _react.default.createElement("img", {
+        id: this.props.savedIds,
         className: "image",
         alt: "gify gif",
         src: this.props.url,
         onDoubleClick: this.doubleClickHandler
+      }), _react.default.createElement("div", {
+        id: "".concat(this.props.savedIds, "-menu"),
+        className: "menu-icon"
       }));
     }
   }]);
@@ -32332,7 +32399,10 @@ function (_React$Component) {
       var displayImages = this.props.savedImages.map(function (url, index) {
         return _react.default.createElement(_Image.default, {
           url: url,
-          addToFavorites: _this.props.addToFavorites
+          addToFavorites: _this.props.addToFavorites,
+          favorites: _this.props.favorites,
+          removeFromFavorites: _this.props.removeFromFavorites,
+          savedIds: _this.props.savedIds[index]
         });
       });
       return _react.default.createElement("section", {
@@ -32405,17 +32475,23 @@ function (_React$Component) {
     _this.state = {
       savedInput: '',
       savedImages: [],
+      savedIds: [],
       pageOffset: 0,
       hitCount: 0,
       imgsAreLoading: false,
       searchHistory: [],
-      favorites: []
+      favorites: [],
+      userAskedForFavs: false
     };
     _this.storeInput = _this.storeInput.bind(_assertThisInitialized(_this));
     _this.storeImages = _this.storeImages.bind(_assertThisInitialized(_this));
+    _this.storeGifIds = _this.storeGifIds.bind(_assertThisInitialized(_this));
     _this.storeTotalHits = _this.storeTotalHits.bind(_assertThisInitialized(_this));
     _this.saveSearchHistory = _this.saveSearchHistory.bind(_assertThisInitialized(_this));
     _this.addToFavorites = _this.addToFavorites.bind(_assertThisInitialized(_this));
+    _this.showFavoriteGifs = _this.showFavoriteGifs.bind(_assertThisInitialized(_this));
+    _this.userSearchedAndDoesNotWantFavs = _this.userSearchedAndDoesNotWantFavs.bind(_assertThisInitialized(_this));
+    _this.removeFromFavorites = _this.removeFromFavorites.bind(_assertThisInitialized(_this));
     _this.updateInputWithHistory = _this.updateInputWithHistory.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -32454,6 +32530,14 @@ function (_React$Component) {
     value: function storeImages(imgsRecieved) {
       this.setState({
         savedImages: imgsRecieved
+      });
+      console.log(this.state.savedImages);
+    }
+  }, {
+    key: "storeGifIds",
+    value: function storeGifIds(idsRecieved) {
+      this.setState({
+        savedIds: idsRecieved
       });
       console.log(this.state.savedImages);
     }
@@ -32497,6 +32581,36 @@ function (_React$Component) {
       console.log("item faved", localStorage);
     }
   }, {
+    key: "showFavoriteGifs",
+    value: function showFavoriteGifs() {
+      // if the favorite button is clicked use the earlier method for populating the dom with favorites array that had been synced with localstorage favorites on componentdidmount
+      this.storeImages(this.state.favorites);
+      this.setState({
+        userAskedForFavs: true
+      });
+    }
+  }, {
+    key: "userSearchedAndDoesNotWantFavs",
+    value: function userSearchedAndDoesNotWantFavs() {
+      this.setState({
+        userAskedForFavs: false
+      });
+    }
+  }, {
+    key: "removeFromFavorites",
+    value: function removeFromFavorites(arrWithAFavRemoved) {
+      this.setState({
+        favorites: arrWithAFavRemoved
+      });
+      console.log({
+        arrWithAFavRemoved: arrWithAFavRemoved
+      });
+      localStorage.setItem('giphoFavorites', JSON.stringify(arrWithAFavRemoved));
+      console.log("item unfaved", localStorage); // this.showFavoriteGifs();
+
+      this.storeImages(arrWithAFavRemoved);
+    }
+  }, {
     key: "updateInputWithHistory",
     value: function updateInputWithHistory(historyItem) {
       this.setState({
@@ -32506,21 +32620,30 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      return _react.default.createElement(_react.default.Fragment, null, _react.default.createElement(_Header.default, null), _react.default.createElement(_Form.default, {
+      return _react.default.createElement(_react.default.Fragment, null, _react.default.createElement(_Header.default, null), _react.default.createElement("button", {
+        onClick: this.showFavoriteGifs
+      }, "SHOW ME FAVORITES"), _react.default.createElement(_Form.default, {
         storeImages: this.storeImages,
+        storeGifIds: this.storeGifIds,
         storeInput: this.storeInput,
         savedInput: this.state.savedInput,
         storeTotalHits: this.storeTotalHits,
         pageOffset: this.state.pageOffset,
         searchHistory: this.state.searchHistory,
         saveSearchHistory: this.saveSearchHistory,
-        updateInputWithHistory: this.updateInputWithHistory
+        updateInputWithHistory: this.updateInputWithHistory,
+        userSearchedAndDoesNotWantFavs: this.userSearchedAndDoesNotWantFavs
       }), this.state.savedImages.length > 0 ? _react.default.createElement("main", null, _react.default.createElement(_Navigation.default, {
         savedInput: this.state.savedInput,
-        hitCount: this.state.hitCount
+        hitCount: this.state.hitCount,
+        userAskedForFavs: this.state.userAskedForFavs,
+        favorites: this.state.favorites
       }), _react.default.createElement(_ImagesContainer.default, {
         savedImages: this.state.savedImages,
-        addToFavorites: this.addToFavorites
+        savedIds: this.state.savedIds,
+        addToFavorites: this.addToFavorites,
+        favorites: this.state.favorites,
+        removeFromFavorites: this.removeFromFavorites
       })) : _react.default.createElement(_react.default.Fragment, null));
     }
   }]);
