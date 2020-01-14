@@ -58,14 +58,12 @@ class Form extends React.Component{
   blurHandler(){
     // When a user clicks way from the input text field the history box will disappear after 1 ms (leaving enough time for it to occupy the text field on click)
     setTimeout(()=>{
-      console.log('hit');
       this.setState({
         isUserSearching:false,
       });
     },500);
   }
  
-  
   render(){
 
     return(

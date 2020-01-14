@@ -9,6 +9,8 @@
   font-family: 'Raleway', sans-serif;  color:#474439;
   z-index: 30;
   top: 50%;
+  padding-bottom: 2em;
+  animation: appear 0.3s;
 }
 .modal-video{
   height:75vh;
@@ -20,4 +22,17 @@
   text-align:right;
   cursor: pointer;
   padding-right: 4%;
+}
+@keyframes appear{
+  0%{
+  opacity:0;
+  }
+ 50%{
+    opacity:0.5;
+
+ }
+  100%{
+    opacity:1;
+
+  }
 }

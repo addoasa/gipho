@@ -24,9 +24,9 @@
 
 ## Using the application
 
-### Click on the input search field and enter anything you'd like to search and click the green search button (or hit enter) Your most recent search results will be store in your local browser's localstorage. You can clear or empty this data at any time by clicking the "Clear History" button at the top right corner of the page.
+### Click on the input search field and enter anything you'd like to search and click the green search button (or hit enter). Your most recent search results will be stored in your local browser's localstorage. You can clear or empty this data at any time by clicking the "Clear History" button at the top right corner of the page.
 
-### Once the page has been populated scroll left to view more Gifs.
+### Once the page has been populated, scroll left to view more Gifs.
 
 ### You can favorite a Gif by double clicking on it. This Gif will then be stored in your favorites. You can view your favorites by clicking on the "FAVORITES" button at the top right corner of the screen, next to the heart.
 

@@ -32062,8 +32062,6 @@ function (_React$Component) {
 
       // When a user clicks way from the input text field the history box will disappear after 1 ms (leaving enough time for it to occupy the text field on click)
       setTimeout(function () {
-        console.log('hit');
-
         _this3.setState({
           isUserSearching: false
         });
@@ -32181,7 +32179,9 @@ function (_React$Component) {
     value: function render() {
       return _react.default.createElement(_react.default.Fragment, null, this.props.userAskedForFavs ? _react.default.createElement("div", {
         className: "navigation"
-      }, _react.default.createElement("h2", null, "Favorites"), _react.default.createElement("h3", null, this.props.favorites.length, " gifs found")) : _react.default.createElement("h3", null, "Found ", this.props.hitCount, " results for : ", this.state.searchTerm));
+      }, _react.default.createElement("h2", null, "Favorites"), _react.default.createElement("h3", null, this.props.favorites.length, " gifs found")) : _react.default.createElement("div", {
+        className: "navigation"
+      }, _react.default.createElement("h3", null, "Found ", this.props.hitCount, " results for : ", this.state.searchTerm)));
     }
   }]);
 
@@ -32195,7 +32195,7 @@ var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"./..\\assets\\small-unlike.png":[["small-unlike.024f50ab.png","assets/small-unlike.png"],"assets/small-unlike.png"],"./..\\assets\\small-like.png":[["small-like.028b7e89.png","assets/small-like.png"],"assets/small-like.png"],"./..\\assets\\like.png":[["like.b0b5a917.png","assets/like.png"],"assets/like.png"],"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"Components/Image.jsx":[function(require,module,exports) {
+},{"./..\\assets\\small-like.png":[["small-like.028b7e89.png","assets/small-like.png"],"assets/small-like.png"],"./..\\assets\\small-unlike.png":[["small-unlike.024f50ab.png","assets/small-unlike.png"],"assets/small-unlike.png"],"./..\\assets\\like.png":[["like.b0b5a917.png","assets/like.png"],"assets/like.png"],"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"Components/Image.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32381,9 +32381,7 @@ function (_React$Component) {
           getModalData: _this.props.getModalData
         });
       });
-      return _react.default.createElement(_react.default.Fragment, null, _react.default.createElement("h5", {
-        className: "scroll-left"
-      }, "( scroll left )"), _react.default.createElement("section", {
+      return _react.default.createElement(_react.default.Fragment, null, _react.default.createElement("section", {
         className: "images-container"
       }, displayImages));
     }
@@ -32823,7 +32821,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63751" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63168" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

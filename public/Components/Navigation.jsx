@@ -31,7 +31,10 @@ class Navigation extends React.Component{
             <h3>{this.props.favorites.length} gifs found</h3>
           </div> 
           : 
-          <h3>Found {this.props.hitCount} results for : {this.state.searchTerm}</h3>}
+          <div className="navigation">
+            <h3>Found {this.props.hitCount} results for : {this.state.searchTerm}</h3>
+        </div> }
+
       </>  
     );
   }
