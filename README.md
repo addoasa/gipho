@@ -1,3 +1,4 @@
+![alt text](./public/assets/gipho.gif)
 
 
 ## Getting Started
@@ -17,9 +18,9 @@
 
 #### `npm run dev`
 
- This will spin up a parcel server listening on localhost:3000. 
+ This will spin up a parcel server listening on localhost:3001. 
 
- Now you can visit localhost:3000 in your web browser to view the application.
+ Now you can visit localhost:3001 in your web browser to view the application.
 
 ## Using the application
  Click on the input search field and enter anything you'd like to search and click the green search button (or hit enter). Your most recent search results will be stored in your local browser's localstorage. You can clear or empty this data at any time by clicking the "Clear History" button at the top right corner of the page.
